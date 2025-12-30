@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Logo from '@/components/Logo';
 import { login } from '@/lib/api';
 import { setToken } from '@/lib/auth';
 
@@ -33,10 +34,10 @@ export default function LoginPage() {
     <div className="page">
       <div className="auth-shell fade-in">
         <div className="auth-hero">
-          <h1>Bem-vindo de volta ao Copilot Chat</h1>
+          <Logo className="logo logo-auth" />
+          <h1>Bem-vindo ao ambiente de testes da Multilog</h1>
           <p>
-            Acesse suas conversas, continue de onde parou e mantenha o contexto
-            sempre atualizado com o backend do Copilot Studio.
+            Ambiente construído para a Multilog testar o Chatbot Inteligênte
           </p>
         </div>
         <div className="auth-panel">

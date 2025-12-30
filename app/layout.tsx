@@ -1,5 +1,5 @@
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Space_Grotesk } from 'next/font/google';
 
 const spaceGrotesk = Space_Grotesk({
@@ -9,8 +9,13 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Copilot Chat',
-  description: 'Frontend inspirado no layout do ChatGPT para o Copilot.'
+  title: 'Multilog - Chatbot Inteligênte',
+  description: 'Ambiente construído para a Multilog testar o Chatbot Inteligênte.'
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1
 };
 
 export default function RootLayout({

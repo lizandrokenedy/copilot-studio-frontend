@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
+import Logo from '@/components/Logo';
 import {
   deleteMe,
   getContext,
@@ -28,6 +29,7 @@ type ContextSummary = { userId: string; summary: string; source: string };
 export default function IntegrationsPage() {
   const router = useRouter();
   const token = useMemo(() => getToken(), []);
+  const showSidebar = process.env.NEXT_PUBLIC_SHOW_SIDEBAR === 'true';
   const [user, setUser] = useState<User | null>(null);
   const [context, setContext] = useState<ContextSummary | null>(null);
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -35,6 +37,7 @@ export default function IntegrationsPage() {
   const [displayName, setDisplayName] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [actionMessage, setActionMessage] = useState<string | null>(null);
 
@@ -117,6 +120,14 @@ export default function IntegrationsPage() {
     router.replace('/login');
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
+  const closeSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
   if (loading) {
     return (
       <div className="page">
@@ -128,24 +139,59 @@ export default function IntegrationsPage() {
   const latestConversation = conversations[0];
 
   return (
-    <div className="app-shell">
-      <aside className="sidebar">
-        <h2>Copilot</h2>
-        <div className="nav-links">
-          <Link className="nav-link" href="/">
-            Chat
-          </Link>
-          <Link className="nav-link active" href="/integrations">
-            Integracoes
-          </Link>
-        </div>
-        <Link className="action-btn new-chat" href="/">
-          Ir para o chat
-        </Link>
-      </aside>
+    <div className={`app-shell ${showSidebar ? 'with-sidebar' : 'no-sidebar'}`}>
+      {showSidebar && (
+        <>
+          <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
+            <button
+              className="sidebar-close"
+              type="button"
+              aria-label="Fechar menu"
+              onClick={closeSidebar}
+            >
+              <span />
+              <span />
+            </button>
+            <Logo className="logo logo-sidebar" />
+          <div className="nav-links">
+            {/* <Link className="nav-link" href="/" onClick={closeSidebar}>
+              Chat
+            </Link>
+            <Link
+              className="nav-link active"
+              href="/integrations"
+              onClick={closeSidebar}
+            >
+              Integracoes
+            </Link> */}
+          </div>
+            <Link className="action-btn new-chat" href="/">
+              Ir para o chat
+            </Link>
+          </aside>
+          <button
+            className={`sidebar-overlay ${isSidebarOpen ? 'open' : ''}`}
+            type="button"
+            aria-label="Fechar menu"
+            onClick={closeSidebar}
+          />
+        </>
+      )}
 
       <section className="chat-content">
         <div className="topbar">
+          {showSidebar && (
+            <button
+              className="menu-btn"
+              type="button"
+              aria-label="Abrir menu"
+              onClick={toggleSidebar}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
+          )}
           <div className="brand">Integracoes</div>
           <div className="top-actions">
             <Link className="text-btn" href="/">

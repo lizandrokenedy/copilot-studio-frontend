@@ -1,5 +1,5 @@
 const API_BASE =
-  process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3000';
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3000/api';
 
 type ApiError = { error: string };
 
@@ -42,7 +42,7 @@ type AuthResponse = {
 };
 
 export function login(payload: { email: string; password: string }) {
-  return request<AuthResponse>('/api/auth/login', {
+  return request<AuthResponse>('/auth/login', {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify(payload)
@@ -54,7 +54,7 @@ export function register(payload: {
   password: string;
   displayName: string;
 }) {
-  return request<AuthResponse>('/api/auth/register', {
+  return request<AuthResponse>('/auth/register', {
     method: 'POST',
     headers: getHeaders(),
     body: JSON.stringify(payload)
@@ -77,7 +77,7 @@ export function getMe(token: string) {
       createdAt: string;
       updatedAt: string;
     };
-  }>('/api/users/me', {
+  }>('/users/me', {
     method: 'GET',
     headers: getHeaders(token)
   });
@@ -92,7 +92,7 @@ export function updateMe(token: string, payload: { displayName: string }) {
       createdAt: string;
       updatedAt: string;
     };
-  }>('/api/users/me', {
+  }>('/users/me', {
     method: 'PATCH',
     headers: getHeaders(token),
     body: JSON.stringify(payload)
@@ -100,7 +100,7 @@ export function updateMe(token: string, payload: { displayName: string }) {
 }
 
 export function deleteMe(token: string) {
-  return request<void>('/api/users/me', {
+  return request<void>('/users/me', {
     method: 'DELETE',
     headers: getHeaders(token)
   });
@@ -108,7 +108,7 @@ export function deleteMe(token: string) {
 
 export function getContext(token: string) {
   return request<{ userId: string; summary: string; source: string }>(
-    '/api/context',
+    '/context',
     {
       method: 'GET',
       headers: getHeaders(token)
@@ -120,7 +120,7 @@ export function getConversations(token: string) {
   return request<{
     conversations: { id: string; title: string; updatedAt: string }[];
     source: string;
-  }>('/api/conversations', {
+  }>('/conversations', {
     method: 'GET',
     headers: getHeaders(token)
   });
@@ -135,7 +135,7 @@ export function createConversation(token: string, title?: string) {
       updatedAt: string;
     };
     source: string;
-  }>('/api/conversations', {
+  }>('/conversations', {
     method: 'POST',
     headers: getHeaders(token),
     body: JSON.stringify(title ? { title } : {})
@@ -153,7 +153,7 @@ export function getConversation(token: string, id: string) {
     messages: { id: string; role: 'user' | 'assistant'; content: string }[];
     contextSummary: string;
     source: string;
-  }>(`/api/conversations/${id}`, {
+  }>(`/conversations/${id}`, {
     method: 'GET',
     headers: getHeaders(token)
   });
@@ -164,9 +164,20 @@ export function postMessage(token: string, id: string, content: string) {
     message: { id: string; role: 'user'; content: string };
     assistantMessage: { id: string; role: 'assistant'; content: string };
     source: string;
-  }>(`/api/conversations/${id}/messages`, {
+  }>(`/conversations/${id}/messages`, {
     method: 'POST',
     headers: getHeaders(token),
     body: JSON.stringify({ role: 'user', content })
+  });
+}
+
+export function deleteConversations(token: string) {
+  return request<{
+    deletedConversations: number;
+    deletedMessages: number;
+    source: string;
+  }>('/conversations', {
+    method: 'DELETE',
+    headers: getHeaders(token)
   });
 }

@@ -1,8 +1,10 @@
+
 'use client';
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Logo from '@/components/Logo';
 import { register } from '@/lib/api';
 import { setToken } from '@/lib/auth';
 
@@ -34,10 +36,10 @@ export default function RegisterPage() {
     <div className="page">
       <div className="auth-shell fade-in">
         <div className="auth-hero">
+          <Logo className="logo logo-auth" />
           <h1>Crie sua conta e comece a conversar</h1>
           <p>
-            O Copilot Chat conecta voce ao agente do Copilot Studio e mant�m suas
-            conversas sincronizadas em tempo real.
+            Ambiente construído para a Multilog testar o Chatbot Inteligênte
           </p>
         </div>
         <div className="auth-panel">

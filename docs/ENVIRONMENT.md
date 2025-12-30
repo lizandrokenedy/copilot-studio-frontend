@@ -9,7 +9,8 @@ Este documento descreve as variaveis de ambiente, arquivos esperados e o fluxo d
 - `COPILOT_DIRECT_LINE_SECRET`: segredo do Direct Line do agente no Copilot Studio.
 - `DIRECT_LINE_BASE_URL`: base URL do Direct Line (padrao `https://directline.botframework.com/v3/directline`).
 - `JWT_SECRET`: segredo usado para assinar os tokens JWT.
-- `JWT_EXPIRES_IN`: tempo de expiração do JWT (ex.: `7d`).
+- `JWT_EXPIRES_IN`: tempo de expiracao do JWT (ex.: `7d`).
+- `NEXT_PUBLIC_SHOW_SIDEBAR`: define se a sidebar do chat deve aparecer (`true` para exibir).
 
 Exemplo:
 ```
@@ -19,6 +20,7 @@ COPILOT_DIRECT_LINE_SECRET=
 DIRECT_LINE_BASE_URL=https://directline.botframework.com/v3/directline
 JWT_SECRET=change-me
 JWT_EXPIRES_IN=7d
+NEXT_PUBLIC_SHOW_SIDEBAR=false
 ```
 
 ## Arquivos
