@@ -32,5 +32,4 @@ docker compose up --build
 Abra em `http://localhost:3000`.
 
 Observacoes:
-- O compose usa `NEXT_PUBLIC_API_BASE_URL=http://host.docker.internal:3000`.
-- Altere a porta/URL no `docker-compose.yml` se necessario.
+- As variaveis `NEXT_PUBLIC_*` sao lidas do `.env` durante o build.

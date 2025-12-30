@@ -16,6 +16,8 @@ RUN corepack enable
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+COPY .env .env
+
 ENV NODE_ENV=production
 RUN yarn build
 
