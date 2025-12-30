@@ -29,7 +29,9 @@ async function request<T>(path: string, options: RequestInit) {
 
   if (!response.ok) {
     const message =
-      data && 'error' in data ? data.error : 'Erro inesperado';
+      data && typeof data === 'object' && 'error' in data
+        ? data.error
+        : 'Erro inesperado';
     throw new Error(message);
   }
 
